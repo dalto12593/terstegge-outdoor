@@ -1,0 +1,66 @@
+---
+// src/layouts/Layout.astro
+// Base HTML layout for all pages. Provides SEO meta, OG tags, JSON-LD, and global styles.
+
+import '../styles/global.css';
+import { BUSINESS } from '../lib/constants';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = BUSINESS.name,
+  description = `Professional mowing, landscape maintenance, shrub trimming, and snow removal in ${BUSINESS.city}, ${BUSINESS.state}. Call ${BUSINESS.phoneFormatted} for a free quote.`,
+} = Astro.props;
+
+const fullTitle = title === BUSINESS.name ? title : `${title} | ${BUSINESS.name}`;
+const canonicalUrl = Astro.url.href;
+
+// JSON-LD LocalBusiness schema
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: BUSINESS.name,
+  telephone: BUSINESS.phoneFormatted,
+  email: BUSINESS.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: BUSINESS.city,
+    addressRegion: BUSINESS.state,
+    postalCode: BUSINESS.zip,
+    addressCountry: 'US',
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Primary Meta -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <!-- og:image intentionally omitted — no suitable asset available yet -->
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body id="top" class="font-sans bg-white text-gray-900 antialiased">
+    <slot />
+  </body>
+</html>
