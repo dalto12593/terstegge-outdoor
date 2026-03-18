@@ -1,0 +1,26 @@
+---
+// src/pages/thanks.astro
+// Form submission success page. Netlify redirects here after contact form is submitted.
+
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Thank You"
+  description="Thanks for contacting Terstegge Outdoor Services. We'll be in touch soon."
+>
+  <div class="min-h-screen bg-forest-dark flex items-center justify-center px-4 text-center">
+    <div>
+      <h1 class="text-4xl font-serif text-white mb-4">Thanks for reaching out!</h1>
+      <p class="text-white/70 text-lg mb-8 max-w-md mx-auto">
+        We'll get back to you as soon as possible.
+      </p>
+      <a
+        href="/"
+        class="inline-block bg-gold hover:bg-gold-dark text-forest-dark font-semibold px-8 py-3 rounded transition"
+      >
+        &larr; Back to Home
+      </a>
+    </div>
+  </div>
+</Layout>
