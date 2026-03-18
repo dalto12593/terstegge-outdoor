@@ -1,0 +1,106 @@
+---
+// src/components/layout/Header.astro
+// Sticky navigation header with desktop nav links and mobile hamburger menu.
+// Mobile toggle: vanilla JS, no framework. Hamburger activates at < md (768px).
+
+import Logo from './Logo.astro';
+import { Menu, X } from '@lucide/astro';
+---
+
+<header class="sticky top-0 z-50 bg-forest-dark border-b border-gold/40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="#top" aria-label="Terstegge Outdoor Services — home">
+        <Logo size={36} variant="white" />
+      </a>
+
+      <!-- Desktop Nav (md and up) -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
+        <a href="#top"      class="text-white/80 hover:text-gold text-sm font-medium transition">Home</a>
+        <a href="#services" class="text-white/80 hover:text-gold text-sm font-medium transition">Services</a>
+        <a href="#contact"  class="text-white/80 hover:text-gold text-sm font-medium transition">Contact</a>
+      </nav>
+
+      <!-- Mobile Hamburger Button (below md) -->
+      <button
+        id="menu-toggle"
+        class="md:hidden text-white/80 hover:text-gold transition p-1"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span id="icon-menu"><Menu size={24} /></span>
+        <span id="icon-close" class="hidden"><X size={24} /></span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Mobile Nav Panel -->
+  <!-- Visibility controlled by CSS via .nav-open on <header>. -->
+  <!-- Always hidden at md+ via scoped <style> below — JS only runs at mobile. -->
+  <div
+    id="mobile-nav"
+    class="bg-forest-dark border-t border-gold/20"
+  >
+    <nav class="flex flex-col py-4 px-6 gap-4" aria-label="Mobile navigation">
+      <a href="#top"      class="text-white/80 hover:text-gold text-sm font-medium transition py-1">Home</a>
+      <a href="#services" class="text-white/80 hover:text-gold text-sm font-medium transition py-1">Services</a>
+      <a href="#contact"  class="text-white/80 hover:text-gold text-sm font-medium transition py-1">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Scoped styles: panel hidden by default; shown only when header has .nav-open.
+     The @media rule ensures it never shows at desktop regardless of JS state,
+     which also handles the edge case of resizing from mobile to desktop with menu open. -->
+<style>
+  #mobile-nav {
+    display: none;
+  }
+  header.nav-open #mobile-nav {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    #mobile-nav {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Mobile hamburger toggle — adds/removes .nav-open on <header>
+  const header    = document.querySelector('header')!;
+  const toggle    = document.getElementById('menu-toggle')!;
+  const iconMenu  = document.getElementById('icon-menu')!;
+  const iconClose = document.getElementById('icon-close')!;
+  const navLinks  = document.querySelectorAll('#mobile-nav a');
+
+  function openMenu() {
+    header.classList.add('nav-open');
+    iconMenu.classList.add('hidden');
+    iconClose.classList.remove('hidden');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    header.classList.remove('nav-open');
+    iconMenu.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle.addEventListener('click', () => {
+    header.classList.contains('nav-open') ? closeMenu() : openMenu();
+  });
+
+  // Close when nav link clicked
+  navLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+  // Auto-close if viewport resizes to desktop (handles orientation change edge case)
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+    if (e.matches) closeMenu();
+  });
+</script>
