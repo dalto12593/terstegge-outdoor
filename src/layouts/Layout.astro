@@ -58,7 +58,7 @@ const jsonLd = {
     <!-- og:image intentionally omitted — no suitable asset available yet -->
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   </head>
   <body id="top" class="font-sans bg-white text-gray-900 antialiased">
     <slot />
