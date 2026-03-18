@@ -1,0 +1,36 @@
+---
+// src/components/home/Hero.astro
+// Hero section: centered logo, headline, subheading, CTA button, grass stripe.
+// The grass stripe at the bottom acts as a visual ground line into the Services section.
+
+import Logo from '../layout/Logo.astro';
+---
+
+<section class="bg-forest-dark">
+  <div class="py-24 md:py-32 text-center px-4">
+    <!-- Logo mark (large) -->
+    <Logo size={80} variant="white" />
+
+    <!-- Headline -->
+    <h1 class="text-4xl md:text-5xl font-serif text-white mt-6 leading-tight">
+      Quincy's Trusted<br />Outdoor Services
+    </h1>
+
+    <!-- Subheading -->
+    <p class="text-lg text-white/70 max-w-xl mx-auto mt-4 leading-relaxed">
+      Professional mowing, landscaping, shrub trimming &amp; snow removal —
+      serving the Quincy, IL area.
+    </p>
+
+    <!-- CTA Button -->
+    <a
+      href="#contact"
+      class="inline-block mt-8 bg-gold hover:bg-gold-dark text-forest-dark font-semibold px-8 py-3 rounded transition"
+    >
+      Get a Free Quote
+    </a>
+  </div>
+
+  <!-- Grass stripe ground line -->
+  <div class="w-full h-4 bg-grass" aria-hidden="true"></div>
+</section>
