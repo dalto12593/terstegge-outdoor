@@ -1,0 +1,30 @@
+---
+// src/components/layout/Footer.astro
+// Site footer: copyright, address, Facebook link.
+
+import { Facebook } from '@lucide/astro';
+import { BUSINESS } from '../../lib/constants';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-forest-dark py-8">
+  <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
+    <p class="text-white/60 text-sm">
+      &copy; {year} {BUSINESS.name}. All rights reserved.
+    </p>
+    <p class="text-white/60 text-sm">
+      {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
+    </p>
+    <a
+      href={BUSINESS.facebook}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Visit us on Facebook"
+      class="inline-flex items-center gap-1.5 text-white/60 hover:text-gold transition text-sm mt-1"
+    >
+      <Facebook size={18} />
+      <span>Facebook</span>
+    </a>
+  </div>
+</footer>
