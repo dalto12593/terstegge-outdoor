@@ -39,10 +39,10 @@ import { BUSINESS } from '../../lib/constants';
           <li>
             <a
               href={`mailto:${BUSINESS.email}`}
-              class="flex items-center gap-3 text-gray-800 hover:text-forest-mid transition break-all"
+              class="flex items-center gap-3 text-gray-800 hover:text-forest-mid transition"
             >
               <Mail size={20} class="text-forest-dark shrink-0" />
-              <span>{BUSINESS.email}</span>
+              <span class="break-all">{BUSINESS.email}</span>
             </a>
           </li>
 
@@ -142,7 +142,7 @@ import { BUSINESS } from '../../lib/constants';
           <!-- Submit -->
           <button
             type="submit"
-            class="bg-gold hover:bg-gold-dark text-forest-dark font-semibold px-6 py-2 rounded transition"
+            class="bg-gold hover:bg-gold-dark text-forest-dark font-semibold px-6 py-2 rounded transition w-full sm:w-auto"
           >
             Send Message
           </button>
