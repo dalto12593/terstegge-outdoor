@@ -1,0 +1,24 @@
+---
+// src/components/layout/Logo.astro
+// Renders the business logo with size and color variant control.
+// variant="color"  → original PNG colors (for use on light backgrounds)
+// variant="white"  → pure white via CSS filter (for use on dark backgrounds)
+
+interface Props {
+  size?: number;
+  variant?: 'color' | 'white';
+  class?: string;
+}
+
+const { size = 36, variant = 'color', class: className = '' } = Astro.props;
+
+const filterClass = variant === 'white' ? 'brightness-0 invert' : '';
+---
+
+<img
+  src="/logo.png"
+  height={size}
+  alt="Terstegge Outdoor Services logo"
+  class={`inline-block ${filterClass} ${className}`}
+  style={`height: ${size}px; width: auto;`}
+/>
