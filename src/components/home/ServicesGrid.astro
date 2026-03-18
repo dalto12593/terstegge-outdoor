@@ -1,0 +1,58 @@
+---
+// src/components/home/ServicesGrid.astro
+// Services section: 4 dark cards in a responsive grid.
+// Each card: gold icon square + service name + description.
+// Layout: 1-col mobile → 2-col tablet → 4-col desktop
+
+import { Scissors, Sprout, Leaf, CloudSnow } from '@lucide/astro';
+
+// Service data — update descriptions or icons here as the client provides more detail
+const services = [
+  {
+    Icon: Scissors,
+    name: 'Mowing',
+    description: 'Regular mowing schedules to keep your lawn looking its best all season long.',
+  },
+  {
+    Icon: Sprout,
+    name: 'Landscape Maintenance',
+    description: 'Seasonal cleanup, edging, and general landscape upkeep for a polished exterior.',
+  },
+  {
+    Icon: Leaf,
+    name: 'Shrub Trimming',
+    description: 'Precision trimming and shaping for hedges and ornamental shrubs.',
+  },
+  {
+    Icon: CloudSnow,
+    name: 'Snow Removal',
+    description: 'Reliable snow and ice clearing for driveways and walkways when winter hits.',
+  },
+];
+---
+
+<section id="services" class="bg-forest-dark py-16 px-4">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Section heading + gold rule -->
+    <h2 class="text-3xl font-serif text-white text-center">What We Do</h2>
+    <div class="w-12 h-0.5 bg-gold mx-auto mt-3 mb-12" aria-hidden="true"></div>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {services.map(({ Icon, name, description }) => (
+        <div class="bg-white/[0.07] border border-gold/35 rounded-lg p-6 hover:border-gold/70 hover:-translate-y-0.5 transition">
+          <!-- Gold icon square -->
+          <div class="w-10 h-10 rounded bg-gold flex items-center justify-center">
+            <Icon size={20} class="text-forest-dark" />
+          </div>
+          <!-- Service name -->
+          <h3 class="text-white font-semibold mt-4">{name}</h3>
+          <!-- Description -->
+          <p class="text-white/60 text-sm mt-1 leading-relaxed">{description}</p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
