@@ -44,7 +44,11 @@ Two issues observed after initial dev preview:
 
 **Letter-spacing:** `tracking-tight` (-0.025em)
 
-**Color treatment:** Two-line split with gold/white hierarchy:
+**Color treatment:** Two-line split with gold/white hierarchy.
+
+The `text-gold` class uses the `gold` token (`#c8a84b`) from `tailwind.config.mjs` — not `gold-dark`.
+
+Final `<h1>` markup (complete class list — replaces the existing `<h1>` in Hero.astro entirely):
 
 ```html
 <h1 class="font-sans font-bold text-4xl md:text-5xl tracking-tight mt-6 leading-tight">
@@ -53,7 +57,11 @@ Two issues observed after initial dev preview:
 </h1>
 ```
 
-- Line 1: `"Terstegge"` — `text-gold` (`#c8a84b`) — brand name, draws the eye first
+Classes retained from original: `text-4xl md:text-5xl mt-6 leading-tight`
+Classes removed: `font-serif`
+Classes added: `font-sans font-bold tracking-tight` + inner `<span>` wrappers for color split
+
+- Line 1: `"Terstegge"` — `text-gold` (`#c8a84b`, Tailwind token: `gold`) — brand name, draws the eye first
 - Line 2: `"Outdoor Services"` — `text-white` — descriptor, supports the name
 
 **Rationale:** Two lines allows larger display size without wrapping concerns. Gold on the brand name creates clear hierarchy and brand identity. White on the service descriptor provides contrast without competing. Bold system sans is modern and readable — suits an outdoor services brand better than traditional serif.
@@ -74,14 +82,17 @@ The surrounding hero structure is unchanged:
 
 - [x] `public/logo.png` — replaced with RGBA transparent PNG (512×453, ~255KB) *(already done)*
 - [x] `public/favicon.png` — updated to match *(already done)*
-- [ ] `src/components/home/Hero.astro` — update `<h1>` only:
-  - Remove `font-serif` class
-  - Add `font-sans font-bold tracking-tight`
-  - Change text from `"Quincy's Trusted<br />Outdoor Services"` to two `<span class="... block">` lines
-  - `<span class="text-gold block">Terstegge</span>`
-  - `<span class="text-white block">Outdoor Services</span>`
+- [ ] `src/components/home/Hero.astro` — replace `<h1>` with:
+  ```html
+  <h1 class="font-sans font-bold text-4xl md:text-5xl tracking-tight mt-6 leading-tight">
+    <span class="text-gold block">Terstegge</span>
+    <span class="text-white block">Outdoor Services</span>
+  </h1>
+  ```
+- [ ] `src/pages/thanks.astro` — update `<h1>` font for consistency: change `font-serif` to `font-sans font-bold`. Full class: `class="text-4xl font-sans font-bold text-white mb-4"`
 - [ ] Run `npx astro check` → 0 errors
 - [ ] Verify in browser at `localhost:4321`:
   - Logo renders as white tree silhouette in header and hero (not a white box)
   - Hero headline shows gold "Terstegge" / white "Outdoor Services" in bold sans
-- [ ] Commit: `git add public/logo.png public/favicon.png src/components/home/Hero.astro && git commit -m "fix: transparent logo PNG and update hero headline to bold sans with gold/white split"`
+  - `/thanks` page headline uses matching sans-serif font
+- [ ] Commit: `git add src/components/home/Hero.astro src/pages/thanks.astro && git commit -m "fix: hero headline to bold sans with gold/white split; sync thanks page font"`
