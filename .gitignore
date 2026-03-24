@@ -24,3 +24,5 @@ pnpm-debug.log*
 
 # Editor
 .vscode/settings.json
+.superpowers/
+firebase-debug.log

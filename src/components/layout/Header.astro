@@ -1,27 +1,63 @@
 ---
 // src/components/layout/Header.astro
-// Sticky navigation header with desktop nav links and mobile hamburger menu.
-// Mobile toggle: vanilla JS, no framework. Hamburger activates at < md (768px).
+// Sticky header: tree logo + business name (D style), nav links, phone number, Facebook.
+// Mobile hamburger toggle at < md (768px).
 
-import Logo from './Logo.astro';
-import { Menu, X } from '@lucide/astro';
+import { Menu, X, Phone } from '@lucide/astro';
+import { BUSINESS } from '../../lib/constants';
 ---
 
 <header class="sticky top-0 z-50 bg-forest-dark border-b border-gold/40">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="flex items-center justify-between h-16">
 
-      <!-- Logo -->
-      <a href="#top" aria-label="Terstegge Outdoor Services — home">
-        <Logo size={36} />
+      <!-- Logo: tree image + stacked business name -->
+      <a href="#top" class="flex items-center gap-2.5" aria-label="Terstegge Outdoor Services — home">
+        <img
+          src="/logo.png"
+          alt=""
+          class="h-9 w-auto"
+          width="36"
+          height="36"
+        />
+        <span class="leading-tight">
+          <span class="block text-white font-bold text-sm tracking-tight">Terstegge</span>
+          <span class="block text-gold text-[10px] font-medium uppercase tracking-widest">Outdoor Services</span>
+        </span>
       </a>
 
-      <!-- Desktop Nav (md and up) -->
-      <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
-        <a href="#top"      class="text-white/80 hover:text-gold text-sm font-medium transition">Home</a>
-        <a href="#services" class="text-white/80 hover:text-gold text-sm font-medium transition">Services</a>
-        <a href="#contact"  class="text-white/80 hover:text-gold text-sm font-medium transition">Contact</a>
-      </nav>
+      <!-- Desktop Nav + Contact (md and up) -->
+      <div class="hidden md:flex items-center gap-6">
+        <nav class="flex items-center gap-6" aria-label="Main navigation">
+          <a href="#top"      class="text-white/80 hover:text-gold text-sm font-medium transition">Home</a>
+          <a href="#services" class="text-white/80 hover:text-gold text-sm font-medium transition">Services</a>
+          <a href="#contact"  class="text-white/80 hover:text-gold text-sm font-medium transition">Contact</a>
+        </nav>
+
+        <span class="w-px h-5 bg-white/20"></span>
+
+        <!-- Phone -->
+        <a
+          href={`tel:+1${BUSINESS.phone}`}
+          class="flex items-center gap-1.5 text-white/80 hover:text-gold text-sm font-medium transition"
+        >
+          <Phone size={15} />
+          <span>{BUSINESS.phoneFormatted}</span>
+        </a>
+
+        <!-- Facebook -->
+        <a
+          href={BUSINESS.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 hover:bg-gold/20 text-white/80 hover:text-gold transition"
+          aria-label="Visit us on Facebook"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+          </svg>
+        </a>
+      </div>
 
       <!-- Mobile Hamburger Button (below md) -->
       <button
@@ -39,8 +75,6 @@ import { Menu, X } from '@lucide/astro';
   </div>
 
   <!-- Mobile Nav Panel -->
-  <!-- Visibility controlled by CSS via .nav-open on <header>. -->
-  <!-- Always hidden at md+ via scoped <style> below — JS only runs at mobile. -->
   <div
     id="mobile-nav"
     class="bg-forest-dark border-t border-gold/20"
@@ -49,13 +83,34 @@ import { Menu, X } from '@lucide/astro';
       <a href="#top"      class="text-white/80 hover:text-gold text-sm font-medium transition py-1">Home</a>
       <a href="#services" class="text-white/80 hover:text-gold text-sm font-medium transition py-1">Services</a>
       <a href="#contact"  class="text-white/80 hover:text-gold text-sm font-medium transition py-1">Contact</a>
+
+      <hr class="border-white/10 my-1" />
+
+      <!-- Phone in mobile menu -->
+      <a
+        href={`tel:+1${BUSINESS.phone}`}
+        class="flex items-center gap-2 text-white/80 hover:text-gold text-sm font-medium transition py-1"
+      >
+        <Phone size={16} />
+        <span>{BUSINESS.phoneFormatted}</span>
+      </a>
+
+      <!-- Facebook in mobile menu -->
+      <a
+        href={BUSINESS.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-white/80 hover:text-gold text-sm font-medium transition py-1"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+        </svg>
+        <span>Facebook</span>
+      </a>
     </nav>
   </div>
 </header>
 
-<!-- Scoped styles: panel hidden by default; shown only when header has .nav-open.
-     The @media rule ensures it never shows at desktop regardless of JS state,
-     which also handles the edge case of resizing from mobile to desktop with menu open. -->
 <style>
   #mobile-nav {
     display: none;
@@ -71,7 +126,6 @@ import { Menu, X } from '@lucide/astro';
 </style>
 
 <script>
-  // Mobile hamburger toggle — adds/removes .nav-open on <header>
   const header    = document.querySelector('header')!;
   const toggle    = document.getElementById('menu-toggle')!;
   const iconMenu  = document.getElementById('icon-menu')!;
@@ -96,10 +150,8 @@ import { Menu, X } from '@lucide/astro';
     header.classList.contains('nav-open') ? closeMenu() : openMenu();
   });
 
-  // Close when nav link clicked
   navLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-  // Auto-close if viewport resizes to desktop (handles orientation change edge case)
   window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
     if (e.matches) closeMenu();
   });

@@ -1,10 +1,15 @@
 ---
 // src/components/home/Gallery.astro
-// "Our Work" photo gallery section with placeholder cards until real photos are available.
+// "Our Work" photo gallery showcasing completed mowing and landscaping jobs.
 
-import { Camera } from '@lucide/astro';
-
-const placeholders = [1, 2, 3, 4, 5, 6];
+const photos = [
+  { src: '/gallery/work-1.jpg', alt: 'Freshly mowed backyard with clean stripe pattern' },
+  { src: '/gallery/work-2.jpg', alt: 'Toro commercial mower on a diamond-striped lawn' },
+  { src: '/gallery/work-3.jpg', alt: 'Commercial church property with professional mowing' },
+  { src: '/gallery/work-4.jpg', alt: 'Lawn care service with American flag display' },
+  { src: '/gallery/work-5.jpg', alt: 'Large commercial property with crosshatch mowing pattern' },
+  { src: '/gallery/work-6.jpg', alt: 'Multiple residential and commercial mowing projects' },
+];
 ---
 
 <section id="gallery" class="bg-forest-dark py-16 px-4 scroll-mt-16">
@@ -15,13 +20,15 @@ const placeholders = [1, 2, 3, 4, 5, 6];
     <div class="w-12 h-0.5 bg-gold mx-auto mt-3 mb-12" aria-hidden="true"></div>
 
     <!-- Gallery grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto">
-      {placeholders.map(() => (
-        <div class="aspect-square rounded-lg overflow-hidden bg-white/[0.07] border border-gold/35">
-          <div class="flex items-center justify-center flex-col gap-2 text-white/30 w-full h-full">
-            <Camera size={32} />
-            <span class="text-sm">Coming Soon</span>
-          </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      {photos.map(({ src, alt }) => (
+        <div class="rounded-lg overflow-hidden border border-gold/35 hover:border-gold/70 transition-all duration-200">
+          <img
+            src={src}
+            alt={alt}
+            class="w-full h-full object-cover aspect-square"
+            loading="lazy"
+          />
         </div>
       ))}
     </div>

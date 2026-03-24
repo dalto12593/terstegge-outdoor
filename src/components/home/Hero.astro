@@ -1,37 +1,67 @@
 ---
 // src/components/home/Hero.astro
-// Hero section: centered logo, headline, subheading, CTA button, grass stripe.
-// The grass stripe at the bottom acts as a visual ground line into the Services section.
-
-import Logo from '../layout/Logo.astro';
+// Hero section: tree/lawn image at natural aspect ratio, text overlaid on top.
+// The image drives the height — no cropping, full tree always visible.
+// Desktop (md+): left-aligned text. Mobile (<md): centered, pushed lower.
 ---
 
-<section class="bg-forest-dark">
-  <div class="py-24 md:py-32 text-center px-4">
-    <!-- Logo mark (large) -->
-    <Logo size={160} />
+<section class="relative bg-forest-dark">
+  <!-- Image at natural size — drives the section height -->
+  <img
+    src="/hero-bg.jpg"
+    alt="Terstegge Outdoor Services — tree with roots in a freshly mowed lawn"
+    class="w-full h-auto block"
+    width="1600"
+    height="631"
+    loading="eager"
+  />
 
-    <!-- Headline -->
-    <h1 class="font-sans font-bold text-4xl md:text-5xl tracking-tight mt-6 leading-tight">
+  <!-- Text overlaid on the dark green sky area of the image -->
+  <div class="hero-content absolute inset-0 px-5 sm:px-8 md:px-12 lg:px-16">
+    <h1 class="font-sans font-bold tracking-tight leading-none
+               text-3xl sm:text-4xl md:text-5xl">
       <span class="text-gold block">Terstegge</span>
-      <span class="text-white block">Outdoor Services</span>
+      <span class="text-white block mt-0.5 md:mt-1">Outdoor Services</span>
     </h1>
 
-    <!-- Subheading -->
-    <p class="text-lg text-white/70 max-w-xl mx-auto mt-4 leading-relaxed">
+    <p class="text-white/70 max-w-sm leading-relaxed
+              text-sm md:text-base
+              mt-3 md:mt-4
+              mx-auto md:mx-0">
       Professional mowing, landscaping, shrub trimming &amp; snow removal —
       serving the Quincy, IL area.
     </p>
 
-    <!-- CTA Button -->
     <a
       href="#contact"
-      class="inline-block mt-8 bg-gold hover:bg-gold-dark text-forest-dark font-semibold px-8 py-3 rounded transition"
+      class="inline-block bg-gold hover:bg-gold-dark text-forest-dark font-semibold rounded transition
+             text-sm md:text-base
+             px-6 md:px-8 py-2.5 md:py-3
+             mt-4 md:mt-5"
     >
       Get a Free Quote
     </a>
   </div>
-
-  <!-- Grass stripe ground line -->
-  <div class="w-full h-4 bg-grass" aria-hidden="true"></div>
 </section>
+
+<style>
+  /* Mobile: centered, text in upper portion */
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    padding-top: 24px;
+  }
+
+  /* Desktop: left-aligned, vertically centered */
+  @media (min-width: 768px) {
+    .hero-content {
+      align-items: flex-start;
+      text-align: left;
+      justify-content: center;
+      padding-top: 0;
+    }
+  }
+</style>
