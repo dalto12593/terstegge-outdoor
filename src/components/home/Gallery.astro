@@ -1,0 +1,30 @@
+---
+// src/components/home/Gallery.astro
+// "Our Work" photo gallery section with placeholder cards until real photos are available.
+
+import { Camera } from '@lucide/astro';
+
+const placeholders = [1, 2, 3, 4, 5, 6];
+---
+
+<section id="gallery" class="bg-forest-dark py-16 px-4 scroll-mt-16">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Section heading + gold rule -->
+    <h2 class="text-3xl font-serif text-white text-center">Our Work</h2>
+    <div class="w-12 h-0.5 bg-gold mx-auto mt-3 mb-12" aria-hidden="true"></div>
+
+    <!-- Gallery grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto">
+      {placeholders.map(() => (
+        <div class="aspect-square rounded-lg overflow-hidden bg-white/[0.07] border border-gold/35">
+          <div class="flex items-center justify-center flex-col gap-2 text-white/30 w-full h-full">
+            <Camera size={32} />
+            <span class="text-sm">Coming Soon</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

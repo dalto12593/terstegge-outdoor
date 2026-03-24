@@ -1,0 +1,37 @@
+---
+// src/components/home/ServiceArea.astro
+// Service area section listing towns served in the Quincy, IL region.
+
+import { MapPin } from '@lucide/astro';
+
+const towns = ['Quincy', 'Hannibal', 'Palmyra', 'Payson', 'Liberty', 'Camp Point', 'Fowler'];
+---
+
+<section id="service-area" class="bg-forest-dark py-16 px-4 scroll-mt-16">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- MapPin icon centered above heading -->
+    <div class="flex justify-center mb-4">
+      <MapPin size={28} class="text-gold" />
+    </div>
+
+    <!-- Section heading + gold rule -->
+    <h2 class="text-3xl font-serif text-white text-center">Serving Quincy &amp; Surrounding Areas</h2>
+    <div class="w-12 h-0.5 bg-gold mx-auto mt-3 mb-6" aria-hidden="true"></div>
+
+    <!-- Description -->
+    <p class="text-white/70 text-base max-w-2xl mx-auto text-center mt-6 leading-relaxed">
+      Proudly serving residential and commercial properties throughout the Quincy, Illinois area including surrounding communities.
+    </p>
+
+    <!-- Town chips -->
+    <div class="flex flex-wrap justify-center gap-2 mt-6">
+      {towns.map((town) => (
+        <span class="px-3 py-1 rounded-full bg-white/[0.07] border border-gold/35 text-white/60 text-sm">
+          {town}
+        </span>
+      ))}
+    </div>
+
+  </div>
+</section>
